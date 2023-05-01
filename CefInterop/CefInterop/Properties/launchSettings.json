@@ -1,7 +1,8 @@
 {
   "profiles": {
     "CefInterop": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "workingDirectory": "$(ProjectDir)/bin/$(Configuration)/net6.0"
     },
     "WSL": {
       "commandName": "WSL2",

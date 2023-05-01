@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,8 @@ namespace CefInterop
     {
         public static UnmanagedDelegates.InitializeCef LoadInteropFunction()
         {
-            var lib = Libdl.dlopen(
-                "/mnt/c/space/IronLibCefWebLinux/CefInterop/CefInterop/bin/Debug/net6.0/CefInteropStackUnwinding.so",
+            var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var lib = Libdl.dlopen(Path.Combine(dir, "CefInteropStackUnwinding.so"),
                 Libdl.RTLD_NOW);
             if (lib == IntPtr.Zero)
                 throw new Exception("Failed to open lib");
