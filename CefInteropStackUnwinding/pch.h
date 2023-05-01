@@ -27,6 +27,7 @@
 #include <exception>
 #include <iostream>
 #include <fstream>
+#include <csignal>
 #include <stack>
 #include <stdarg.h>
 #include <stdio.h>

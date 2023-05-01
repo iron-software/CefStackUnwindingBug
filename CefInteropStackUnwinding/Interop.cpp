@@ -4,6 +4,16 @@ extern "C"
 {
 void InitializeCef()
 {
+	// init handler storage
+	struct sigaction* dotnet_sigs = new struct sigaction[31];
+	struct sigaction* cef_sigs = new struct sigaction[31];
+	// store dotnet handlers
+	for(int i=0; i<31; i++)
+	{
+		memset(&dotnet_sigs[i], 0, sizeof(dotnet_sigs[i]));
+		memset(&cef_sigs[i], 0, sizeof(cef_sigs[i]));
+		sigaction(i, 0, &dotnet_sigs[i]);
+	}
 	// get current dir
 	char buff[FILENAME_MAX]; //create string buffer to hold path
 	getcwd(buff, FILENAME_MAX);
@@ -28,5 +38,10 @@ void InitializeCef()
 	// initialize!
 	CefProxy proxy;
     CefInitialize(args, cef_settings, &proxy, NULL);
+	// restore dotnet handlers (and store cef handlers)
+	for (int i = 0; i < 31; i++)
+	{
+		sigaction(i, &dotnet_sigs[i], &cef_sigs[i]);
+	}
 }
 }
